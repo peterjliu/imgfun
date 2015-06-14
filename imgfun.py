@@ -1,6 +1,6 @@
 import numpy as np
 def Img2Mat(img):
-    """Reshapes an RGB image with dimension(r, c, 3) to a matrix with dimension [r*c, 3]. 
+    """Reshapes an RGB image with dimension(r, c, 3) to a matrix with dimension [r*c, 3].
     
     Each row of the matrix corresponds to a pixel in row-major order."""
     return np.reshape(img, (img.shape[0]*img.shape[1], 3))
@@ -8,9 +8,10 @@ def Img2Mat(img):
 def Mat2Img(m, r, c):
     """Inverse of Img2Matrix, with number of rows and columns specified."""
     return np.reshape(m, (r,c,3))
-def assign_means(means, pmat):
+
+def AssignMeans(means, pmat):
     """Compute nearest means
-    
+
     Args:
         means: K x d
         pmat: N x d
@@ -29,7 +30,7 @@ def assign_means(means, pmat):
     print a.shape
     return a
 
-def compute_means(clusters, pmat, K):
+def ComputeMeans(clusters, pmat, K):
     """Compute means given cluster assignments
     
     Args:
@@ -54,7 +55,7 @@ def compute_means(clusters, pmat, K):
                                  pmat), axis=0) / num_points
     return means
 
-def kmeans(pmat, K, mini, maxi):
+def Kmeans(pmat, K, mini, maxi):
     """Run K means on data
     
     The K means are initialized uniformly in [mini, maxi]
@@ -75,7 +76,7 @@ def kmeans(pmat, K, mini, maxi):
     while True:
         iterations += 1
         print "Running iteration %d" % iterations
-        clusters = assign_means(means, pmat)
+        clusters = AssignMeans(means, pmat)
         print clusters
         print clusters.shape
         print prev_clusters.shape
@@ -86,11 +87,11 @@ def kmeans(pmat, K, mini, maxi):
             print "Converged"
             break
         print "before compute means"
-        means = compute_means(clusters, pmat, K)
+        means = ComputeMeans(clusters, pmat, K)
         prev_clusters = np.copy(clusters)
     return [means, clusters]
     
-def gen_kmeans_image(img, K):
+def GenKmeansImage(img, K):
     """Generates an rgb-image by performing K-means on img
     
     Args:
@@ -100,8 +101,8 @@ def gen_kmeans_image(img, K):
         New image"""
     imat = Img2Mat(img)
     N = imat.shape[0]
-    [means, clusters] = kmeans(imat, K, 0, 255)
+    [means, clusters] = Kmeans(imat, K, 0, 255)
     newimg = np.zeros((N, 3))
     for i in range(N):
         newimg[i, :] = means[clusters[i], :]
-    return Mat2Img(newimg, img.shape[0], img.shape[1])
+    return Mat2Img(newimg, img.shape[0], img.shape[1]).astype("uint8")
