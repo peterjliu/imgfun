@@ -1,3 +1,5 @@
-Python (NumPy) code to perform k-means clustering on the pixels of an image. 
+Python (NumPy) and Torch7 code to perform k-means clustering on the pixels of an image. 
+This was an exercise mainly to compare torch7 with numpy.
 
-Check out the iPython notebook for example usage. Note the example requires more standard packages for viewing the images.
+kmeans.ipynb -- Python version
+torch-kmeans.ipynb -- Torch7 version
