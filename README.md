@@ -3,3 +3,4 @@ This was an exercise mainly to compare torch7 with numpy.
 
 kmeans.ipynb -- Python version
 torch-kmeans.ipynb -- Torch7 version (itorch notebook)
+kmeans.lua -- torch7 script
